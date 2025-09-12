@@ -19,6 +19,7 @@ public class Unit {
     @SequenceGenerator(name = "unit_seq", sequenceName = "unit_seq_id")
     private Long id;
 
+    //it makes posibility to add several configuration(scalability)
     @OneToMany(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<UnitProperties> properties = new HashSet<>();
 
