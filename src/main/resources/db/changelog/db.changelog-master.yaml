@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: classpath:db/changelog/db.changelog-init.yaml
+  - include:
+      file: classpath:db/changelog/db.changelog-tables.yaml
+  - include:
+      file: classpath:db/changelog/db.changelog-inserts.sql

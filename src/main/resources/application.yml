@@ -12,10 +12,14 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
-liquibase:
-  change-log: classpath:db/changelog/db.changelog-master.sql
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
 
 server:
   port: 8080
 
+logging:
+  level:
+    liquibase: ERROR
+    org.springframework: ERROR
+    org.hibernate: ERROR

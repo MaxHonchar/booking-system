@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Max
+      changes:
+        - createSequence:
+            sequenceName: user_seq_id
+            startValue: 1
+            incrementBy: 50
+            cacheSize: 50
+
+        - createSequence:
+            sequenceName: booking_seq_id
+            startValue: 1
+            incrementBy: 50
+            cacheSize: 50
+
+        - createSequence:
+            sequenceName: events_seq_id
+            startValue: 1
+            incrementBy: 50
+            cacheSize: 50
+
+        - createSequence:
+            sequenceName: payments_seq_id
+            startValue: 1
+            incrementBy: 50
+            cacheSize: 50
+
+        - createSequence:
+            sequenceName: unit_seq_id
+            startValue: 1
+            incrementBy: 50
+            cacheSize: 50
+
+        - createSequence:
+            sequenceName: unit_properties_seq_id
+            startValue: 1
+            incrementBy: 50
+            cacheSize: 50
+
+        - sql: |
+            CREATE TYPE event_type AS ENUM ('CREATE', 'UPDATE', 'DELETE');
+
+        - sql: |
+            CREATE TYPE accommodation_type AS ENUM ('HOME', 'FLAT', 'APARTMENTS');
+
+        - sql: |
+            CREATE TYPE payment_status AS ENUM ('NOT_PAID', 'PAID', 'CANCELED');
