@@ -21,8 +21,8 @@ FOR i IN 1..90 LOOP
         unit_type := (ARRAY['FLAT','HOME','APARTMENTS'])[1 + floor(random()*3)];
         event_random_id := 1 + floor(random() * 3);
 
-INSERT INTO units (id, description, cost, booked)
-VALUES (nextval('unit_seq_id'), 'Unit #' || i, unit_cost, false);
+INSERT INTO units (id, description, cost)
+VALUES (nextval('unit_seq_id'), 'Unit #' || i, unit_cost);
 
 INSERT INTO unit_properties (id, unit_id, type, rooms, floor)
 VALUES (nextval('unit_properties_seq_id'), currval('unit_seq_id'), unit_type, unit_rooms, unit_floor);

@@ -7,18 +7,18 @@ VALUES
     (2, 'UPDATE'),
     (3, 'DELETE');
 
-INSERT INTO units("id", "cost", "description", "booked")
+INSERT INTO units("id", "cost", "description")
 VALUES
-    (1, 50.5, 'Large apartment with sea view', false),
-    (2, 45.5, 'Modern studio on high floor', false),
-    (3, 35.5, 'Comfortable apartment', false),
-    (4, 27.7, 'Comfortable studio', false),
-    (5, 60,   'Large and Comfortable apartment near with the sea', false),
-    (6, 90.8,   'Very Large and Comfortable apartment near with the sea', false),
-    (7, 108.8,   'VIP apartment near with the sea', false),
-    (8, 153,   'VIP house near with the sea', false),
-    (9, 20,   'small flat', false),
-    (10, 15.5,   'very small flat', false);
+    (1, 50.5, 'Large apartment with sea view'),
+    (2, 45.5, 'Modern studio on high floor'),
+    (3, 35.5, 'Comfortable apartment'),
+    (4, 27.7, 'Comfortable studio'),
+    (5, 60,   'Large and Comfortable apartment near with the sea'),
+    (6, 90.8,   'Very Large and Comfortable apartment near with the sea'),
+    (7, 108.8,   'VIP apartment near with the sea'),
+    (8, 153,   'VIP house near with the sea'),
+    (9, 20,   'small flat'),
+    (10, 15.5,   'very small flat');
 
 INSERT INTO event_unit_relation("event_id", "unit_id")
 VALUES

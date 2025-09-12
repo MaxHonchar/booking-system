@@ -31,6 +31,5 @@ public class Unit {
 
     private BigDecimal cost;
     private String description;
-    private Boolean booked = false;
 
 }
