@@ -5,6 +5,9 @@ import com.test.booking.enums.EventType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Optional;
 
 @Slf4j
@@ -30,6 +33,11 @@ public class CommonUtils {
 
     public static BigDecimal getDecimal(Double cost) {
         return Optional.ofNullable(cost).map(BigDecimal::valueOf).orElse(null);
+    }
+
+    public static Optional<Instant> convertLocalDateToInstant(LocalDate localDate) {
+        return Optional.ofNullable(localDate)
+                .map(date -> date.atStartOfDay(ZoneOffset.UTC).toInstant());
     }
 
 }

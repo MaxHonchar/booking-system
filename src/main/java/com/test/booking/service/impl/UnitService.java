@@ -5,6 +5,7 @@ import com.test.booking.dtos.UnitDto;
 import com.test.booking.dtos.UnitSearchDto;
 import com.test.booking.mappers.UnitMapper;
 import com.test.booking.repository.IUnitCriteriaRepository;
+import com.test.booking.repository.IUnitRepository;
 import com.test.booking.service.IUnitService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,12 +17,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UnitService implements IUnitService {
 
+    private final IUnitRepository unitRepository;
     private final IUnitCriteriaRepository unitCriteriaRepository;
     private final UnitMapper unitMapper;
 
@@ -35,6 +38,11 @@ public class UnitService implements IUnitService {
         Page<UnitDto> unitDtoPage = convert(unitPage);
         log.info("converted unit count: {} and total {}", unitDtoPage.getSize(), unitDtoPage.getTotalElements());
         return unitDtoPage;
+    }
+
+    @Override
+    public Optional<Unit> getUnitById(Long id) {
+        return unitRepository.findById(id);
     }
 
     private Page<UnitDto> convert(Page<Unit> unitPage) {

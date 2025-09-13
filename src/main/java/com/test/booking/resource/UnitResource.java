@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.util.Objects;
 
 import static com.test.booking.utils.CommonUtils.*;
 
@@ -46,7 +44,7 @@ public class UnitResource {
             @Parameter(name = "minCost", description = "min cost ", example = "100", allowEmptyValue = true),
             @Parameter(name = "maxCost", description = "max cost ", example = "800", allowEmptyValue = true)
     })
-    @GetMapping
+    @GetMapping("/search")
     public Page<UnitDto> findUnitsByFilters(
             @RequestParam(required = false, defaultValue = "") String accommodationType,
             @RequestParam(required = false, defaultValue = "") String eventType,
@@ -71,8 +69,8 @@ public class UnitResource {
                                            Double maxCost) {
         AccommodationType type = getAccommodationType(accommodationType);
         EventType eventType = getEventType(event);
-        Instant start = Objects.nonNull(fromDate) ? fromDate.atStartOfDay(ZoneOffset.UTC).toInstant() : null;
-        Instant end = Objects.nonNull(toDate) ? toDate.atStartOfDay(ZoneOffset.UTC).toInstant() : null;
+        Instant start = convertLocalDateToInstant(fromDate).orElse(null);
+        Instant end = convertLocalDateToInstant(toDate).orElse(null);
         BigDecimal minDecimal = getDecimal(minCost);
         BigDecimal maxDecimal = getDecimal(maxCost);
         return UnitSearchDto.builder()

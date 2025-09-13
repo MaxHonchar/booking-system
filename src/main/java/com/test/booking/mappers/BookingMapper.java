@@ -6,5 +6,5 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface BookingMapper {
-    //TODO BookingDto map(Booking booking);
+    BookingDto map(Booking booking);
 }

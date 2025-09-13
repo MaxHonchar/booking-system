@@ -100,6 +100,13 @@ databaseChangeLog:
               - column:
                   name: check_out
                   type: TIMESTAMP
+              - column:
+                  name: status
+                  type: booking_status
+        - addUniqueConstraint:
+            tableName: booking
+            columnNames: user_id, unit_id
+            constraintName: UNIQUE_BOOKING_INDEX
 
   # PAYMENTS table
   - changeSet:
@@ -126,6 +133,9 @@ databaseChangeLog:
                   type: payment_status
               - column:
                   name: paid_at
+                  type: TIMESTAMP
+              - column:
+                  name: expires_at
                   type: TIMESTAMP
               - column:
                   name: amount

@@ -47,3 +47,6 @@ databaseChangeLog:
 
         - sql: |
             CREATE TYPE payment_status AS ENUM ('NOT_PAID', 'PAID', 'CANCELED');
+
+        - sql: |
+            CREATE TYPE booking_status AS ENUM ('CREATED', 'BOOKED', 'CANCELED');

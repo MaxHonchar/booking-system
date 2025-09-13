@@ -23,3 +23,6 @@ logging:
     liquibase: ERROR
     org.springframework: ERROR
     org.hibernate: ERROR
+
+booking:
+  expiration: 15

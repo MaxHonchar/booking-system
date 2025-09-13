@@ -12,7 +12,7 @@ import java.time.Instant;
 @Builder
 public class UnitSearchDto {
     private AccommodationType accommodationType;
-    private EventType eventType = EventType.DELETE;
+    private EventType eventType;
     private BigDecimal minCost;
     private BigDecimal maxCost;
     private Instant fromDate;

@@ -3,7 +3,7 @@ package com.test.booking.dtos;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 @Data
 @Builder
@@ -11,6 +11,6 @@ public class BookingDto {
     private Long id;
     private UnitDto unit;
     private UserDto user;
-    private LocalDate checkIn;
-    private LocalDate checkOut;
+    private Instant checkIn;
+    private Instant checkOut;
 }
