@@ -17,7 +17,7 @@ public class Booking {
     @SequenceGenerator(name = "booking_seq", sequenceName = "booking_seq_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "booking")
     private Payment payment;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

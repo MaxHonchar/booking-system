@@ -1,0 +1,35 @@
+package com.test.booking.utils;
+
+import com.test.booking.enums.AccommodationType;
+import com.test.booking.enums.EventType;
+import lombok.extern.slf4j.Slf4j;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
+@Slf4j
+public class CommonUtils {
+
+    public static AccommodationType getAccommodationType(String accommodationType) {
+        try {
+            return AccommodationType.valueOf(accommodationType);
+        } catch (Exception e) {
+            log.warn("Error while getting accommodation type {}", accommodationType, e);
+            return null;
+        }
+    }
+
+    public static EventType getEventType(String eventType) {
+        try {
+            return EventType.valueOf(eventType);
+        } catch (Exception e) {
+            log.warn("Error while getting event type {}", eventType, e);
+            return EventType.DELETE;
+        }
+    }
+
+    public static BigDecimal getDecimal(Double cost) {
+        return Optional.ofNullable(cost).map(BigDecimal::valueOf).orElse(null);
+    }
+
+}

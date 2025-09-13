@@ -3,10 +3,11 @@ package com.test.booking.service.impl;
 import com.test.booking.domain.Unit;
 import com.test.booking.domain.UnitProperties;
 import com.test.booking.enums.AccommodationType;
-import com.test.booking.repository.UnitRepository;
+import com.test.booking.repository.IUnitRepository;
 import com.test.booking.service.IEventService;
 import com.test.booking.service.IUnitDummyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,10 +30,11 @@ public class UnitDummyService implements IUnitDummyService {
     private static final int ACCOMODATION_BOUND = 2;
     private static final double COEFFICIENT = 15.0;
 
-    private final UnitRepository unitRepository;
+    private final IUnitRepository unitRepository;
     private final IEventService eventService;
     private final Random random = new Random();
 
+    @Async
     @Transactional
     @Override
     public void initUnits() {
@@ -70,7 +72,7 @@ public class UnitDummyService implements IUnitDummyService {
     private Set<UnitProperties> getUnitProperties(AccommodationType[] accommodationTypes, Unit unit) {
         int rooms = ONE.intValue() + random.nextInt(MAX_ROOM);
         int floor = ONE.intValue() + random.nextInt(MAX_FLOOR);
-        int accommodationTypeIndex = ONE.intValue() + random.nextInt(ACCOMODATION_BOUND);
+        int accommodationTypeIndex = random.nextInt(ACCOMODATION_BOUND);
         AccommodationType accommodationType = accommodationTypes[accommodationTypeIndex];
         UnitProperties properties = new UnitProperties();
         properties.setRooms(rooms);

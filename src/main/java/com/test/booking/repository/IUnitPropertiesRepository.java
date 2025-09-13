@@ -1,9 +1,9 @@
 package com.test.booking.repository;
 
-import com.test.booking.domain.Event;
+import com.test.booking.domain.UnitProperties;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EventRepository extends CrudRepository<Event, Long> {
+public interface IUnitPropertiesRepository extends CrudRepository<UnitProperties, Long> {
 }

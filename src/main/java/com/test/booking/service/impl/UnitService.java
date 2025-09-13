@@ -4,7 +4,7 @@ import com.test.booking.domain.Unit;
 import com.test.booking.dtos.UnitDto;
 import com.test.booking.dtos.UnitSearchDto;
 import com.test.booking.mappers.UnitMapper;
-import com.test.booking.repository.UnitRepository;
+import com.test.booking.repository.IUnitCriteriaRepository;
 import com.test.booking.service.IUnitService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,18 +22,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UnitService implements IUnitService {
 
-    private final UnitRepository unitRepository;
+    private final IUnitCriteriaRepository unitCriteriaRepository;
     private final UnitMapper unitMapper;
 
     @Override
     public Page<UnitDto> getAvailableUnits(UnitSearchDto searchDto, Pageable pageable) {
-        log.info("getAvailableUnits by minCost: {}, maxCost : {}, fromDate: {}, toDate {}",
+        log.info("getAvailableUnits by type{} minCost: {}, maxCost : {}, fromDate: {}, toDate {}",
+                searchDto.getAccommodationType(),
                 searchDto.getMinCost(), searchDto.getMaxCost(), searchDto.getFromDate(), searchDto.getToDate());
-        Page<Unit> unitPage = unitRepository.findUnitsByFilters(searchDto.getMinCost(), searchDto.getMaxCost(),
-                searchDto.getFromDate(), searchDto.getToDate(), pageable);
-        log.info("find units count: {}", unitPage.getTotalElements());
+        Page<Unit> unitPage = unitCriteriaRepository.findUnitsByFilters(searchDto, pageable);
+        log.info("find total units count: {} and pages {}", unitPage.getTotalElements(), unitPage.getTotalPages());
         Page<UnitDto> unitDtoPage = convert(unitPage);
-        log.info("converted unit count: {}", unitDtoPage.getTotalElements());
+        log.info("converted unit count: {} and total {}", unitDtoPage.getSize(), unitDtoPage.getTotalElements());
         return unitDtoPage;
     }
 
@@ -43,6 +43,6 @@ public class UnitService implements IUnitService {
             List<UnitDto> dtos = unitMapper.map(units);
             return new PageImpl<>(dtos, unitPage.getPageable(), unitPage.getTotalElements());
         }
-        return new PageImpl<>(new ArrayList<>(), unitPage.getPageable(), unitPage.getTotalElements());
+        return new PageImpl<>(new ArrayList<>());
     }
 }

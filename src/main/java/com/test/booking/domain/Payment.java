@@ -21,7 +21,7 @@ public class Payment {
     @SequenceGenerator(name = "payments_seq", sequenceName = "payments_seq_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "booking_id")
     private Booking booking;
 
