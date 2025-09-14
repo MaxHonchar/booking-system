@@ -18,12 +18,14 @@ import com.test.booking.utils.CommonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -112,5 +114,13 @@ public class BookingService implements IBookingService {
         booking.setPayment(payment);
         booking.setStatus(bookingStatus);
         return bookingRepository.save(booking);
+    }
+
+    @Scheduled(fixedRate = 60000)
+    public void cleanupExpired() {
+        bookingRepository.findBookingsByStatusAndPaymentExpiresAtAfter(BookingStatus.CREATED, Instant.now())
+                .forEach(booking -> {
+                    updatePaymentBooking(booking, BookingStatus.CANCELED, PaymentStatus.CANCELED);
+                });
     }
 }
