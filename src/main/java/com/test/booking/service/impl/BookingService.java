@@ -14,15 +14,19 @@ import com.test.booking.repository.IPaymentRepository;
 import com.test.booking.service.IBookingService;
 import com.test.booking.service.IUnitService;
 import com.test.booking.service.IUserService;
+import com.test.booking.utils.CommonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 import static com.test.booking.utils.CommonUtils.*;
 
@@ -72,5 +76,41 @@ public class BookingService implements IBookingService {
         paymentRepository.save(payment);
 
         return Optional.of(bookingMapper.map(booking));
+    }
+
+    @Transactional
+    @Override
+    public Optional<BookingDto> pay(Long bookingId, Double amount) {
+        BigDecimal decimal = CommonUtils.getDecimal(amount);
+        return bookingRepository.findById(bookingId)
+                .filter(booking -> Objects.nonNull(booking.getPayment()))
+                .filter(Predicate.not(booking -> booking.getStatus().equals(BookingStatus.BOOKED)))
+                .filter(Predicate.not(booking -> booking.getPayment().getStatus().equals(PaymentStatus.PAID)))
+                .filter(Predicate.not(booking -> booking.getPayment().getStatus().equals(PaymentStatus.CANCELED)))
+                .filter(booking -> booking.getPayment().getAmount().equals(decimal))
+                .map(booking -> updatePaymentBooking(booking, BookingStatus.BOOKED, PaymentStatus.PAID))
+                .map(bookingMapper::map);
+    }
+
+    @Transactional
+    @Override
+    public Optional<BookingDto> cancel(Long bookingId) {
+        return bookingRepository.findById(bookingId)
+                .filter(booking -> Objects.nonNull(booking.getPayment()))
+                .filter(Predicate.not(booking -> booking.getPayment().getStatus().equals(PaymentStatus.CANCELED)))
+                .map(booking -> updatePaymentBooking(booking, BookingStatus.CANCELED, PaymentStatus.CANCELED))
+                .map(bookingMapper::map);
+    }
+
+    private Booking updatePaymentBooking(Booking booking, BookingStatus bookingStatus, PaymentStatus status) {
+        Payment payment = booking.getPayment();
+        payment.setStatus(status);
+        if(PaymentStatus.PAID.equals(status)) {
+            payment.setPaidAt(Instant.now());
+        }
+
+        booking.setPayment(payment);
+        booking.setStatus(bookingStatus);
+        return bookingRepository.save(booking);
     }
 }
