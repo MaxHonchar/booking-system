@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BookingResource.class)
-class BookingResourceTest {
+public class BookingResourceTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,7 +41,7 @@ class BookingResourceTest {
 
     @Test
     @DisplayName("POST /api/booking - should create booking and return 200")
-    void createBooking_success() throws Exception {
+    void shoudReturnSuccessWhenCreateBooking() throws Exception {
         CreateBookingDto createDto = CreateBookingDto.builder()
                 .unitId(1L)
                 .userEmail("john@example.com")
@@ -57,7 +57,7 @@ class BookingResourceTest {
                 .checkOut(Instant.now().plusSeconds(86400))
                 .build();
 
-        Mockito.when(bookingService.save(any(CreateBookingDto.class)))
+        Mockito.when(bookingService.create(any(CreateBookingDto.class)))
                 .thenReturn(Optional.of(bookingDto));
 
         mockMvc.perform(post("/api/booking")
@@ -70,8 +70,8 @@ class BookingResourceTest {
 
     @Test
     @DisplayName("POST /api/booking - should return 204 if no booking created")
-    void createBooking_noContent() throws Exception {
-        Mockito.when(bookingService.save(any(CreateBookingDto.class)))
+    void shouldReturnNoContentWhenCreateBooking() throws Exception {
+        Mockito.when(bookingService.create(any(CreateBookingDto.class)))
                 .thenReturn(Optional.empty());
 
         CreateBookingDto createDto = CreateBookingDto.builder().unitId(1L).build();
@@ -84,7 +84,7 @@ class BookingResourceTest {
 
     @Test
     @DisplayName("PATCH /api/booking/pay/{id} - should pay booking and return 200")
-    void payBooking_success() throws Exception {
+    void shouldReturnSuccessWhenPayBooking() throws Exception {
         BookingDto bookingDto = BookingDto.builder()
                 .id(11L)
                 .user(UserDto.builder().email("pay@example.com").build())
@@ -102,7 +102,7 @@ class BookingResourceTest {
 
     @Test
     @DisplayName("PATCH /api/booking/pay/{id} - should return 204 if payment fails")
-    void payBooking_noContent() throws Exception {
+    void shouldNoContentWhenPayBooking() throws Exception {
         Mockito.when(bookingService.pay(eq(99L), eq(200.0)))
                 .thenReturn(Optional.empty());
 
@@ -113,7 +113,7 @@ class BookingResourceTest {
 
     @Test
     @DisplayName("PATCH /api/booking/cancel/{id} - should cancel booking and return 200")
-    void cancelBooking_success() throws Exception {
+    void shouldSuccessWhenCancelBooking() throws Exception {
         BookingDto bookingDto = BookingDto.builder()
                 .id(15L)
                 .user(UserDto.builder().email("cancel@example.com").build())
@@ -130,7 +130,7 @@ class BookingResourceTest {
 
     @Test
     @DisplayName("PATCH /api/booking/cancel/{id} - should return 204 if cancel fails")
-    void cancelBooking_noContent() throws Exception {
+    void shouldNoContentWhenCancelBooking() throws Exception {
         Mockito.when(bookingService.cancel(77L)).thenReturn(Optional.empty());
 
         mockMvc.perform(patch("/api/booking/cancel/{id}", 77L))

@@ -36,7 +36,7 @@ public class BookingResource {
     })
     @PostMapping
     public ResponseEntity<BookingDto> createBooking(@RequestBody CreateBookingDto dto) {
-        return bookingService.save(dto)
+        return bookingService.create(dto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.noContent().build());
     }

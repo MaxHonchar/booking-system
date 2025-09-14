@@ -1,12 +1,16 @@
 package com.test.booking.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Builder
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateBookingDto {
     private Long unitId;
     private String userEmail;

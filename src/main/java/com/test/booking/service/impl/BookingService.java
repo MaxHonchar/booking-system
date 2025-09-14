@@ -16,6 +16,8 @@ import com.test.booking.service.ICacheService;
 import com.test.booking.service.IUnitService;
 import com.test.booking.service.IUserService;
 import com.test.booking.utils.CommonUtils;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,7 +51,7 @@ public class BookingService implements IBookingService {
 
     @Transactional
     @Override
-    public Optional<BookingDto> save(CreateBookingDto dto) {
+    public Optional<BookingDto> create(CreateBookingDto dto) {
 
         final Unit unit = unitService.getUnitById(dto.getUnitId())
                 .orElseThrow(() -> new IllegalArgumentException("Unit not found"));
@@ -75,10 +77,14 @@ public class BookingService implements IBookingService {
         payment.setBooking(booking);
         payment.setAmount(unit.getCost());
         payment.setStatus(PaymentStatus.NOT_PAID);
-        payment.setExpiresAt(Instant.now().plus(expirationTime, ChronoUnit.MINUTES));
+        payment.setExpiresAt(getExpirationTime());
         paymentRepository.save(payment);
 
         return Optional.of(bookingMapper.map(booking));
+    }
+
+    private Instant getExpirationTime() {
+        return Instant.now().plus(expirationTime, ChronoUnit.MINUTES);
     }
 
     @Transactional
@@ -114,7 +120,6 @@ public class BookingService implements IBookingService {
 
         booking.setPayment(payment);
         booking.setStatus(bookingStatus);
-        cacheService.updateTotalUnits();
         return bookingRepository.save(booking);
     }
 

@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UnitResource.class)
-class UnitResourceTest {
+public class UnitResourceTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -49,7 +49,7 @@ class UnitResourceTest {
 
     @Nested
     @DisplayName("GET /api/unit/search")
-    class SearchUnits {
+    public class SearchUnits {
 
         @ParameterizedTest
         @CsvSource({
@@ -106,7 +106,7 @@ class UnitResourceTest {
 
     @Nested
     @DisplayName("POST /api/unit")
-    class CreateUnit {
+    public class CreateUnit {
 
         @Test
         @DisplayName("should create unit and update cache")

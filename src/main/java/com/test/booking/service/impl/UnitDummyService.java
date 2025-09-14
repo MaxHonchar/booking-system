@@ -27,7 +27,7 @@ public class UnitDummyService implements IUnitDummyService {
     private static final int MAX_EVENT_ID = 3;
     private static final int MAX_ROOM = 10;
     private static final int MAX_FLOOR = 90;
-    private static final int ACCOMODATION_BOUND = 2;
+    private static final int ACCOMODATION_BOUND = 3;
 
     private final IUnitRepository unitRepository;
     private final IEventService eventService;

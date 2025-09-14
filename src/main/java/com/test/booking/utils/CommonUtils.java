@@ -30,7 +30,7 @@ public class CommonUtils {
             return EventType.valueOf(eventType);
         } catch (Exception e) {
             log.warn("Error while getting event type {}", eventType, e);
-            return EventType.DELETE;
+            return null;
         }
     }
 

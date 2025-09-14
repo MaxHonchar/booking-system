@@ -10,7 +10,6 @@ import com.test.booking.mappers.UnitMapper;
 import com.test.booking.mappers.UnitPropertiesMapper;
 import com.test.booking.repository.IUnitCriteriaRepository;
 import com.test.booking.repository.IUnitRepository;
-import com.test.booking.service.ICacheService;
 import com.test.booking.service.IEventService;
 import com.test.booking.service.IUnitService;
 import lombok.RequiredArgsConstructor;
@@ -34,13 +33,13 @@ import static com.test.booking.utils.CommonUtils.getCostWithBookingPercentage;
 @RequiredArgsConstructor
 public class UnitService implements IUnitService {
 
-    private final ICacheService cacheService;
     private final IUnitRepository unitRepository;
     private final IUnitCriteriaRepository unitCriteriaRepository;
     private final IEventService eventService;
     private final UnitPropertiesMapper unitPropertiesMapper;
     private final UnitMapper unitMapper;
 
+    @Transactional(readOnly = true)
     @Override
     public Page<UnitDto> getAvailableUnits(UnitSearchDto searchDto, Pageable pageable) {
         log.info("getAvailableUnits by type{} minCost: {}, maxCost : {}, fromDate: {}, toDate {}",

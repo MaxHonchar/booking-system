@@ -73,7 +73,7 @@ public class UnitResource {
                                            Double minCost,
                                            Double maxCost) {
         AccommodationType type = getAccommodationType(accommodationType);
-        EventType eventType = getEventType(event);
+        EventType eventType = Optional.ofNullable(getEventType(event)).orElse(EventType.DELETE);
         Instant start = convertLocalDateToInstant(fromDate).orElse(null);
         Instant end = convertLocalDateToInstant(toDate).orElse(null);
         BigDecimal minDecimal = getDecimal(minCost);
