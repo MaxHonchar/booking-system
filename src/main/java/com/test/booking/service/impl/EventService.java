@@ -1,6 +1,7 @@
 package com.test.booking.service.impl;
 
 import com.test.booking.domain.Event;
+import com.test.booking.enums.EventType;
 import com.test.booking.repository.IEventRepository;
 import com.test.booking.service.IEventService;
 import lombok.AllArgsConstructor;
@@ -20,5 +21,11 @@ public class EventService implements IEventService {
     public Optional<Event> findById(Long id) {
         log.debug("find Event by id {}", id);
         return eventRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Event> findByType(EventType type) {
+        log.debug("find Event by type {}", type);
+        return eventRepository.findEventByType(type);
     }
 }

@@ -11,9 +11,10 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.Random;
 import java.util.Set;
+
+import static com.test.booking.utils.CommonUtils.getCostWithBookingPercentage;
 
 @Service
 @RequiredArgsConstructor
@@ -22,13 +23,11 @@ public class UnitDummyService implements IUnitDummyService {
     private static final Long ONE = 1L;
     private static final int AMOUNT_OF_UNITS = 90;
     private static final int THOUSAND_NUMBER = 1000;
-    private static final int ONE_HUNDRED = 100;
     private static final int MIN_COST = 20;
     private static final int MAX_EVENT_ID = 3;
     private static final int MAX_ROOM = 10;
     private static final int MAX_FLOOR = 90;
     private static final int ACCOMODATION_BOUND = 2;
-    private static final double COEFFICIENT = 15.0;
 
     private final IUnitRepository unitRepository;
     private final IEventService eventService;
@@ -42,8 +41,9 @@ public class UnitDummyService implements IUnitDummyService {
 
         for (int i = 0; i < AMOUNT_OF_UNITS; i++) {
 
+            double cost = MIN_COST + random.nextDouble(THOUSAND_NUMBER);
             Unit unit = new Unit();
-            unit.setCost(getCost());
+            unit.setCost(getCostWithBookingPercentage(cost));
             unit.setDescription(getDescription(i));
 
             populateEvent(unit);
@@ -80,12 +80,6 @@ public class UnitDummyService implements IUnitDummyService {
         properties.setType(accommodationType);
         properties.setUnit(unit);
         return Set.of(properties);
-    }
-
-    private BigDecimal getCost() {
-        double cost = MIN_COST + random.nextDouble(THOUSAND_NUMBER);
-        double percentage = COEFFICIENT / ONE_HUNDRED;
-        return BigDecimal.valueOf(cost + cost * percentage);
     }
 
 }

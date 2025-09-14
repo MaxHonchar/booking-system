@@ -8,5 +8,6 @@ import org.springframework.data.domain.Pageable;
 public interface IUnitCriteriaRepository {
 
     Page<Unit> findUnitsByFilters(UnitSearchDto unitSearchDto, Pageable pageable);
+    Long getTotalUnits(UnitSearchDto unitSearchDto);
 
 }

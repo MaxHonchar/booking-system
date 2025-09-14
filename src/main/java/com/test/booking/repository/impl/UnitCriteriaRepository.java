@@ -26,6 +26,7 @@ public class UnitCriteriaRepository implements IUnitCriteriaRepository {
     private static final String EVENTS = "events";
     private static final String PROPERTIES = "properties";
     private static final String TYPE = "type";
+    private static final String STATUS = "status";
     private static final String CHECK_IN = "checkIn";
     private static final String CHECK_OUT = "checkOut";
     private static final String COST = "cost";
@@ -39,6 +40,12 @@ public class UnitCriteriaRepository implements IUnitCriteriaRepository {
         List<Unit> units = getUnits(unitSearchDto, pageable, builder);
         Long total = getTotalUnits(unitSearchDto, builder);
         return new PageImpl<>(units, pageable, total);
+    }
+
+    @Override
+    public Long getTotalUnits(UnitSearchDto unitSearchDto) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        return getTotalUnits(unitSearchDto, builder);
     }
 
     private Long getTotalUnits(UnitSearchDto unitSearchDto, CriteriaBuilder builder) {
@@ -79,6 +86,11 @@ public class UnitCriteriaRepository implements IUnitCriteriaRepository {
 
         Optional.ofNullable(searchDto.getEventType()).ifPresent(eventType -> {
             predicates.add(builder.notEqual(events.get(TYPE), eventType));
+        });
+
+        Optional.ofNullable(searchDto.getBookingStatus()).ifPresent(status -> {
+            predicates.add(builder.or(builder.isNull(bookings.get(STATUS)),
+                    builder.notEqual(bookings.get(STATUS), status)));
         });
 
         Optional.ofNullable(searchDto.getFromDate()).ifPresent(fromDate -> {

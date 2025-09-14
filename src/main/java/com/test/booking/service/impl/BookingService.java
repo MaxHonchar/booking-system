@@ -12,6 +12,7 @@ import com.test.booking.mappers.BookingMapper;
 import com.test.booking.repository.IBookingRepository;
 import com.test.booking.repository.IPaymentRepository;
 import com.test.booking.service.IBookingService;
+import com.test.booking.service.ICacheService;
 import com.test.booking.service.IUnitService;
 import com.test.booking.service.IUserService;
 import com.test.booking.utils.CommonUtils;
@@ -39,6 +40,7 @@ public class BookingService implements IBookingService {
 
     private final IUnitService unitService;
     private final IUserService userService;
+    private final ICacheService cacheService;
     private final IBookingRepository bookingRepository;
     private final IPaymentRepository paymentRepository;
     private final BookingMapper bookingMapper;
@@ -113,6 +115,7 @@ public class BookingService implements IBookingService {
 
         booking.setPayment(payment);
         booking.setStatus(bookingStatus);
+        cacheService.updateTotalUnits();
         return bookingRepository.save(booking);
     }
 
@@ -122,5 +125,6 @@ public class BookingService implements IBookingService {
                 .forEach(booking -> {
                     updatePaymentBooking(booking, BookingStatus.CANCELED, PaymentStatus.CANCELED);
                 });
+        cacheService.updateTotalUnits();
     }
 }

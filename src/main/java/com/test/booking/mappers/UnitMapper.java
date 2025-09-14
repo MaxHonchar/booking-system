@@ -3,7 +3,6 @@ package com.test.booking.mappers;
 import com.test.booking.domain.Unit;
 import com.test.booking.dtos.UnitDto;
 import org.mapstruct.Mapper;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 

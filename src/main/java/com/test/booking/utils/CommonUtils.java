@@ -13,6 +13,9 @@ import java.util.Optional;
 @Slf4j
 public class CommonUtils {
 
+    public static final double COEFFICIENT = 15.0;
+    public static final int ONE_HUNDRED = 100;
+
     public static AccommodationType getAccommodationType(String accommodationType) {
         try {
             return AccommodationType.valueOf(accommodationType);
@@ -38,6 +41,11 @@ public class CommonUtils {
     public static Optional<Instant> convertLocalDateToInstant(LocalDate localDate) {
         return Optional.ofNullable(localDate)
                 .map(date -> date.atStartOfDay(ZoneOffset.UTC).toInstant());
+    }
+
+    public static BigDecimal getCostWithBookingPercentage(Double value) {
+        double percentage = COEFFICIENT / ONE_HUNDRED;
+        return BigDecimal.valueOf(value + value * percentage);
     }
 
 }

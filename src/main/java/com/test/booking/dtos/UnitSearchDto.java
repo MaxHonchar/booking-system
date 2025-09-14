@@ -1,6 +1,7 @@
 package com.test.booking.dtos;
 
 import com.test.booking.enums.AccommodationType;
+import com.test.booking.enums.BookingStatus;
 import com.test.booking.enums.EventType;
 import lombok.Builder;
 import lombok.Data;
@@ -17,4 +18,5 @@ public class UnitSearchDto {
     private BigDecimal maxCost;
     private Instant fromDate;
     private Instant toDate;
+    private BookingStatus bookingStatus;
 }

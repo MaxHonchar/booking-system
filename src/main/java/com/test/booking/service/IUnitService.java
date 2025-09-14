@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface IUnitService {
     Page<UnitDto> getAvailableUnits(UnitSearchDto searchDto, Pageable pageable);
     Optional<Unit> getUnitById(Long id);
+    Optional<UnitDto> createUnit(UnitDto dto);
 }

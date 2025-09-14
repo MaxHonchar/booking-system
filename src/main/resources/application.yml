@@ -2,6 +2,7 @@ spring:
   application:
     name=booking
 
+
   datasource:
     url: jdbc:postgresql://localhost:5432/bookingdb
     username: postgres
@@ -14,6 +15,11 @@ spring:
         format_sql: true
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
+  data:
+    redis:
+      expiration: 15
+      host: localhost
+      port: 6379
 
 server:
   port: 8080
