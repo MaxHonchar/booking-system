@@ -1,6 +1,6 @@
 # Booking System (Spring Boot + PostgreSQL + Redis)
 
-A monolithic booking system built with **Java 21**, **Spring Boot**, **Spring Data JPA**, **Liquibase**, and **Gradle**.  
+A booking system built with **Java 21**, **Spring Boot**, **Spring Data JPA**, **Liquibase**, and **Gradle**.  
 Users can add accommodation units, search with filters, book units, simulate payments, and cancel bookings.  
 Statistics on available units are cached in **Redis**.
 
